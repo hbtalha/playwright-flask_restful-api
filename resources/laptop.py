@@ -11,7 +11,7 @@ class Laptop(Resource):
         self.grabber: Grabber = Grabber()
         self.laptops_sort = ['brand', 'price', 'num_reviews', 'num_stars']
 
-    def abort_if_sort_option_ivalid(self, sort):
+    def abort_if_sort_option_invalid(self, sort):
         if sort is not None and sort not in self.laptops_sort:
             abort(HTTP_400_BAD_REQUEST, message="Unknown sort option {0}, allowed options: {1}".format(sort, self.laptops_sort))
 
@@ -37,7 +37,7 @@ class Laptop(Resource):
     # @swag_from('./docs/laptops/laptops.yaml')
     def get(self):
         args = flask_request.args
-        self.abort_if_sort_option_ivalid(args.get('sort'))
+        self.abort_if_sort_option_invalid(args.get('sort'))
         self.abort_if_num_is_zero_or_less(args.get('num'))
         self.validate_price_range(min_price=args.get('min_price'), max_price=args.get('max_price'))
         brand = args.get('brand')
