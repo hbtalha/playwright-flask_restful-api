@@ -4,7 +4,7 @@ tags:
   - Laptops
 
 parameters:
-  - name: brnd
+  - name: brand
     in: query
     type: string
     required: false
@@ -46,6 +46,6 @@ parameters:
     description: get laptop with the maximum price
 responses:
   400:
-    description: Error Unknown sort option
+    description: Errors {'Unknown sort option', 'number of laptops must be greater than zero', 'invalid price range'}
   200:
     description: laptops returned successfully
