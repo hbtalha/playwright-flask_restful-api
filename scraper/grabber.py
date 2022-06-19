@@ -15,11 +15,11 @@ class Grabber:
         self.sorting_order = ['ascending', 'descending']
         self.laptop_brands = ['all', 'lenovo', 'dell', 'hp', 'hewlett packard', 'acer', 'asus', 'msi', 'toshiba', 'prestigio']
 
-    def _filter_laptops(self, laptops: list, brand: str, sort: str, sorting_order: str,
+    def _filter_laptops(self, laptops: list, brands: list, sort: str, sorting_order: str,
                         min_num_of_stars: int, min_num_of_reviews: int, num: int, max_price: int, min_price: int) -> list:
         if laptops:
-            if brand is not None and isinstance(brand, str) and brand.lower() in self.laptop_brands and brand.lower() != 'all':
-                laptops = [laptop for laptop in laptops if laptop[0] is not None and brand.lower() in laptop[0].lower()]
+            if brands is not None and not (len(brands) == 1 and brands[0] == 'all') and any(brand in brands for brand in self.laptop_brands):
+                laptops = [laptop for laptop in laptops if laptop[0] is not None and laptop[0].lower() in( brand.lower() for brand in brands)]
 
             if sort is not None and isinstance(sort, str) and sort.lower() in self.laptops_sort:
                 sort_index = None
@@ -52,7 +52,7 @@ class Grabber:
         else:
             return []
 
-    def get_laptops(self, brand: str, sort: str, sorting_order: str, min_num_of_stars: int, min_num_of_reviews: int, num: int, max_price: int, min_price: int):
+    def get_laptops(self, requested_brands: list, sort: str, sorting_order: str, min_num_of_stars: int, min_num_of_reviews: int, num: int, max_price: int, min_price: int):
         urls = self.page.locator('.caption > h4 > .title').evaluate_all('elements => elements.map(el => el.href)')
         descriptions = self.page.locator('.caption > .description').all_text_contents()
         prices = self.page.locator('.caption > .price').all_text_contents()
@@ -71,7 +71,7 @@ class Grabber:
         num_reviews = list(map(int, num_reviews))
 
         all_laptops = list(zip(brands, names, prices, descriptions, num_reviews, num_stars, urls))
-        filtered_laptops = self._filter_laptops(laptops=all_laptops, brand=brand, sort=sort, sorting_order=sorting_order, min_num_of_stars=min_num_of_stars,
+        filtered_laptops = self._filter_laptops(laptops=all_laptops, brands=requested_brands, sort=sort, sorting_order=sorting_order, min_num_of_stars=min_num_of_stars,
                                                 min_num_of_reviews=min_num_of_reviews, num=num, min_price=min_price, max_price=max_price)
 
         return self._dictfy(filtered_laptops)
