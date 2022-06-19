@@ -4,11 +4,11 @@ tags:
   - Laptops
 
 parameters:
-  - name: brand
+  - name: brands
     in: query
-    type: string
+    type: string|list
     required: false
-    description: brand of the laptop
+    description: brands of the laptop
   - name: sort
     in: query
     type: string
