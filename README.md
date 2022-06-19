@@ -27,11 +27,11 @@ tags:
   - Laptops
 
 parameters:
-  - name: brand
+  - name: brands
     in: query
-    type: string
+    type: string|list
     required: false
-    description: brand of the laptop
+    description: brands of the laptop
   - name: sort
     in: query
     type: string
@@ -84,8 +84,8 @@ BASE = 'http://127.0.0.1:5000/'
 
 # response = requests.get(BASE + 'laptops') # returns all laptops
 
-response = requests.get(BASE + 'laptops', {"brand": "all", "sort": "price", "num": 25, "max_price": 1000, "min_price": 500, "min_num_reviews": 8,
- "min_num_stars": 3, "sorting_order":'ascending'})
+response = requests.get(BASE + 'laptops', {"brands": ['asus', 'hp'], "sort": "price", "sorting_order":'ascending', "num": 15, "max_price": 1500, "min_price": 400, "min_num_reviews": 5,
+ "min_num_stars": 2})
 
 print(response.json())
 with open('D:/Desktop/response.json', 'w') as f:
