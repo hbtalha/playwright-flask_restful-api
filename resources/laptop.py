@@ -40,7 +40,7 @@ class Laptop(Resource):
         self.abort_if_sort_option_invalid(args.get('sort'))
         self.abort_if_num_is_zero_or_less(args.get('num'))
         self.validate_price_range(min_price=args.get('min_price'), max_price=args.get('max_price'))
-        brand = args.get('brand')
+        brands = args.getlist('brands')
         sort = args.get('sort')
         sorting_order = args.get('sorting_order')
         num = self.convert_to_numeric(args.get('num'))
@@ -48,5 +48,5 @@ class Laptop(Resource):
         min_num_reviews = self.convert_to_numeric(args.get('min_num_reviews'))
         max_price = self.convert_to_numeric(args.get('max_price'))
         min_price = self.convert_to_numeric(args.get('min_price'))
-        return self.grabber.get_laptops(brand=brand, sort=sort, sorting_order=sorting_order, num=num, max_price=max_price,
+        return self.grabber.get_laptops(requested_brands=brands, sort=sort, sorting_order=sorting_order, num=num, max_price=max_price,
                                         min_price=min_price, min_num_of_reviews=min_num_reviews, min_num_of_stars=min_num_stars), HTTP_200_OK
