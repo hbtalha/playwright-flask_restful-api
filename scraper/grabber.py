@@ -30,7 +30,6 @@ class Grabber:
 
                 if sort_index is not None and sorting_order is not None and isinstance(sorting_order, str) and sorting_order.lower() in self.sorting_order:
                     sort_reverse = True if sorting_order == self.sorting_order[1] else False
-                    print('sorting = {0} - {1} - {2}'.format(sort_index, sort, sort_reverse))
                     laptops.sort(key=lambda x: x[sort_index], reverse=sort_reverse)
 
             if min_num_of_stars is not None and isinstance(min_num_of_stars, int) and min_num_of_stars >= 1 and min_num_of_stars <= 5:
