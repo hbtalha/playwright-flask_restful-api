@@ -4,13 +4,8 @@ class Grabber:
     def __init__(self):
         playwright = sync_playwright().start()
         self.browser = playwright.chromium.launch(headless=True)
-        self.page = self.browser.new_page()
-        self.page.goto('https://webscraper.io/test-sites/e-commerce/allinone/computers/laptops')
+        self.page = self.browser.new_page()      
         
-        # self.page.goto('https://webscraper.io/test-sites/e-commerce/allinone/product/545')
-        # self.page.locator('#side-menu > li:nth-child(2)').click()
-        # self.page.locator('#side-menu > li.active > ul > li:nth-child(1)').click()
-
         self.laptops_sort = ['brand',  '', 'price', '', 'num_reviews', 'num_stars', ] # empty strings to avoid too many if and else statements in filter function
         self.sorting_order = ['ascending', 'descending']
         self.laptop_brands = ['all', 'lenovo', 'dell', 'hp', 'hewlett packard', 'acer', 'asus', 'msi', 'toshiba', 'prestigio']
@@ -52,6 +47,12 @@ class Grabber:
             return []
 
     def get_laptops(self, requested_brands: list, sort: str, sorting_order: str, min_num_of_stars: int, min_num_of_reviews: int, num: int, max_price: int, min_price: int):
+        self.page.goto('https://webscraper.io/test-sites/e-commerce/allinone/computers/laptops')
+
+        # self.page.goto('https://webscraper.io/test-sites/e-commerce/allinone/product/545')
+        # self.page.locator('#side-menu > li:nth-child(2)').click()
+        # self.page.locator('#side-menu > li.active > ul > li:nth-child(1)').click()
+
         urls = self.page.locator('.caption > h4 > .title').evaluate_all('elements => elements.map(el => el.href)')
         descriptions = self.page.locator('.caption > .description').all_text_contents()
         prices = self.page.locator('.caption > .price').all_text_contents()
