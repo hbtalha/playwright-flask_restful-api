@@ -19,5 +19,9 @@ api = Api(app)
 
 api.add_resource(Laptop, '/laptops')
 
+# @app.route("/")
+# def get():
+#     return 'Welcome, to get laptops go to <a href="http://127.0.0.1:5000/laptops" class="laptops-link">http://127.0.0.1:5000/laptops</a>'
+
 if __name__ == "__main__":
     app.run(debug=True)
